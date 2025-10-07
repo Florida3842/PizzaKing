@@ -1,0 +1,52 @@
+﻿@model PizzaKing.ViewModels.PizzaSummaryViewModel
+@{
+    ViewData["Title"] = "Итог пиццы";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="card p-3 mb-3">
+        <h5>Корж</h5>
+        <p><strong>@Model.Crust?.Name</strong> — @String.Format("{0:C}", Model.Crust?.Price ?? 0m)</p>
+        @if (!string.IsNullOrEmpty(Model.Crust?.ImagePath))
+        {
+            <img src="@Model.Crust.ImagePath" alt="@Model.Crust.Name" style="height:80px;object-fit:contain" />
+        }
+    </div>
+
+    <div class="card p-3 mb-3">
+        <h5>Соус</h5>
+        <p><strong>@Model.Sauce?.Name</strong> — @String.Format("{0:C}", Model.Sauce?.Price ?? 0m)</p>
+        @if (!string.IsNullOrEmpty(Model.Sauce?.ImagePath))
+        {
+            <img src="@Model.Sauce.ImagePath" alt="@Model.Sauce.Name" style="height:80px;object-fit:contain" />
+        }
+    </div>
+
+    <div class="card p-3 mb-3">
+        <h5>Топпинги</h5>
+        @if (Model.Toppings != null && Model.Toppings.Any())
+        {
+            <ul>
+                @foreach (var t in Model.Toppings)
+                {
+                    <li>@t.Name — @String.Format("{0:C}", t.Price)</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Без топпингов</p>
+        }
+    </div>
+
+    <div class="mb-3">
+        <h4>Итого: @String.Format("{0:C}", Model.TotalPrice)</h4>
+    </div>
+
+    <div>
+        <a asp-action="Index" class="btn btn-secondary">Вернуться и изменить</a>
+        <!-- Здесь можно добавить кнопку "Добавить в корзину" / "Оформить заказ" -->
+    </div>
+</div>

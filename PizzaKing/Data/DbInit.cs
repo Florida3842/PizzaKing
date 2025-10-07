@@ -233,6 +233,29 @@ BEGIN TRANSACTION
               $"@pizzaCategoryId = {categories[0]}, @saladCategoryId = {categories[1]}, @drinkCategoryId = {categories[2]}");
             context.Database.CommitTransaction();
         }
+        public static async Task InitializeContextAsync(ApplicationContext context)
+        {
+            if(!await context.Ingredients.AnyAsync())
+            {
+                await context.Ingredients.AddRangeAsync(
+                    new Ingredient { Name = "Thin crust", Category = IngredientCategory.Crust, ImagePath = "/assets/ingredients/crust_thin.png", Price = 0m, IsDefault = true },
+                    new Ingredient { Name = "Classic crust", Category = IngredientCategory.Crust, ImagePath = "/assets/ingredients/crust_classic.png", Price = 1.5m },
+
+
+                    // Sauces
+                    new Ingredient { Name = "Tomato sauce", Category = IngredientCategory.Sauce, ImagePath = "/assets/ingredients/sauce_tomato.png", Price = 0.5m, IsDefault = true },
+                    new Ingredient { Name = "White garlic sauce", Category = IngredientCategory.Sauce, ImagePath = "/assets/ingredients/sauce_garlic.png", Price = 0.7m },
+
+
+                    // Toppings
+                    new Ingredient { Name = "Mozzarella", Category = IngredientCategory.Topping, ImagePath = "/assets/ingredients/topping_mozzarella.png", Price = 0.8m, IsDefault = true },
+                    new Ingredient { Name = "Pepperoni", Category = IngredientCategory.Topping, ImagePath = "/assets/ingredients/topping_pepperoni.png", Price = 1.0m },
+                    new Ingredient { Name = "Mushrooms", Category = IngredientCategory.Topping, ImagePath = "/assets/ingredients/topping_mushrooms.png", Price = 0.6m },
+                    new Ingredient { Name = "Basil", Category = IngredientCategory.Topping, ImagePath = "/assets/ingredients/topping_basil.png", Price = 0.3m }
+                    );
+                await context.SaveChangesAsync();
+            }
+        }
         private static void ClearData(ApplicationContext context)
         {
             context.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));

@@ -17,6 +17,7 @@ public class ApplicationContext : IdentityDbContext<User>
     public DbSet<ShopCartItem> ShopCartItems { get; set; } = null!;   
     public DbSet<Order> Orders { get; set; } = null!;
     public DbSet<OrderDetails> OrderDetails { get; set; } = null!;
+    public DbSet<Ingredient> Ingredients { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ShopCartItem>()
